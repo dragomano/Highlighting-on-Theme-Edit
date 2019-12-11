@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
+<package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
+	<id>Bugo:HighlightThemeEdit</id>
+	<name>Highlighting on Theme Edit</name>
+	<version>0.8</version>
+	<type>modification</type>
+
+	<install for="SMF 2.1 RC2, 2.1 - 2.1.99">
+		<readme parsebbc="true" lang="russian">readme/russian.txt</readme>
+		<readme parsebbc="true">readme/readme.txt</readme>
+		<hook hook="integrate_menu_buttons" function="HighlightThemeEdit::menuButtons" file="$sourcedir/Class-HighlightThemeEdit.php" />
+		<require-dir name="Themes" destination="$boarddir" />
+		<require-dir name="Sources" destination="$boarddir" />
+		<redirect url="?action=admin;area=theme;sa=admin;sa=edit" timeout="1000" />
+	</install>
+
+	<uninstall for="SMF 2.1 RC2, 2.1 - 2.1.99">
+		<hook hook="integrate_menu_buttons" function="HighlightThemeEdit::menuButtons" file="$sourcedir/Class-HighlightThemeEdit.php" reverse="true" />
+		<remove-dir name="$themedir/css/codemirror" />
+		<remove-dir name="$themedir/scripts/codemirror" />
+		<remove-file name="$sourcedir/Class-HighlightThemeEdit.php" />
+		<redirect url="?action=admin;area=packages;sa=browse" timeout="1000" />
+	</uninstall>
+
+</package-info>
