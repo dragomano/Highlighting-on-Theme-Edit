@@ -6,10 +6,10 @@
  * @package Highlight on Theme Edit
  * @link https://dragomano.ru/mods/highlighting-on-theme-edit
  * @author Bugo https://custom.simplemachines.org/mods/index.php?mod=2800
- * @copyright 2010-2019 Bugo
+ * @copyright 2010-2020 Bugo
  * @license https://opensource.org/licenses/MIT The MIT License
  *
- * @version 0.8
+ * @version 0.9
  */
 
 if (!defined('SMF'))
@@ -22,6 +22,9 @@ class HighlightThemeEdit
 		global $context, $settings, $txt;
 
 		if (!isset($_REQUEST['area']) || $_REQUEST['area'] != 'theme' || (!isset($_REQUEST['sa']) || $_REQUEST['sa'] != 'edit'))
+			return;
+
+		if (!isset($_GET['filename']))
 			return;
 
 		$style_list = glob($settings['default_theme_dir'] . "/css/codemirror/*.css");
@@ -52,16 +55,31 @@ class HighlightThemeEdit
 				$("textarea").parent(".centertext").css("text-align", "left");
 				$("input[name=save]").before(\'<div class="floatleft">' . $txt['theme'] . ' <select id="hteThemeChanger" onchange="selectTheme(this.value)">';
 
+		unset($context['hte_style_set']['codemirror']);
+		$context['hte_style_set']['default'] = 'Default';
+		ksort($context['hte_style_set']);
+
 		foreach ($context['hte_style_set'] as $file => $name)
 			$context['insert_after_template'] .= '<option value="' . $file . '">' . $name . '</option>';
 
 		$context['insert_after_template'] .= '</select></div>\');
 				var data = localStorage.getItem("hteTheme");
 				if (data !== null) {
-					$("#hteThemeChanger").val(data);
-					editor.setOption("theme", data);
+					$("#hteThemeChanger").val(data);';
+
+		if (!empty($context['sub_template']) && $context['sub_template'] == 'edit_template') {
+			foreach ($context['file_parts'] as $part) {
+				$context['insert_after_template'] .= '
+					editor' . $part['line'] . '.setOption("theme", data);';
+			}
+		} else {
+			$context['insert_after_template'] .= '
+					editor.setOption("theme", data);';
+		}
+
+		$context['insert_after_template'] .= '
 				} else {
-					$("#hteThemeChanger option[value=\'codemirror\']").attr("selected", "selected");
+					$("#hteThemeChanger option[value=\'default\']").attr("selected", "selected");
 				}
 			});';
 
@@ -72,7 +90,8 @@ class HighlightThemeEdit
 				$context['insert_after_template'] .= '
 			var editor = CodeMirror.fromTextArea(document.getElementsByName("entire_file")[0], {
 				lineNumbers: true,
-				mode: "text/' . ($filename == 'css' ? 'css' : 'javascript') . '"
+				mode: "text/' . ($filename == 'css' ? 'css' : 'javascript') . '",
+				lineWrapping: true
 			});
 			function selectTheme(theme) {
 				editor.setOption("theme", theme);
