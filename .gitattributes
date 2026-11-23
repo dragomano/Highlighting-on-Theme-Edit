@@ -1,0 +1,11 @@
+* text=auto
+
+*.php text
+*.js text
+*.css text
+*.xml text
+*.md text
+*.json text
+*.txt text
+
+*.zip binary

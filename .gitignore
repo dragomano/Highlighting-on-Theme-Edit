@@ -1,0 +1,10 @@
+/vendor/
+/composer.lock
+/composer.phar
+/highlighting_on_theme_edit_*.zip
+
+# CodeMirror assets are downloaded by `composer build`
+/src/Themes/default/css/codemirror/*
+!/src/Themes/default/css/codemirror/index.php
+/src/Themes/default/scripts/codemirror/*
+!/src/Themes/default/scripts/codemirror/index.php

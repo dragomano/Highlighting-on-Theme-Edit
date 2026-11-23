@@ -1,0 +1,15 @@
+{
+    "name": "bugo/highlighting-on-theme-edit",
+    "description": "Syntax highlighting when editing files of SMF 2.1 themes",
+    "type": "project",
+    "license": "MIT",
+    "require-dev": {
+        "consolidation/robo": "^5.1"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "build": "robo build"
+    }
+}
