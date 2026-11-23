@@ -1,0 +1,5 @@
+[center][color=red][size=16pt][b]Highlighting on Theme Edit[/b][/size][/color]
+[color=blue][b][size=10pt]By Bugo[/size][/b][/color]
+
+[color=green]Подсветка исходного кода в файлах тем оформления, при их редактировании через админку.[/color]
+В модификации используется скрипт подсветки синтаксиса — [url=https://codemirror.net]CodeMirror[/url] by Marijn Haverbeke, предоставляемый по лицензии [url=https://codemirror.net/LICENSE]The MIT[/url].[/center][hr]Распространяется по лицензии [url=https://opensource.org/licenses/MIT]The MIT[/url]
